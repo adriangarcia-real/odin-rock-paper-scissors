@@ -5,6 +5,18 @@ function getComputerChoice() {
   return computerChoice;
 }
 
+// Tally computer and player score
+let computerScore = 0;
+let playerScore = 0;
+
+function tallyScore(playerWins) {
+  if (playerWins) {
+    playerScore += 1;
+  } else {
+    computerScore += 1;
+  }
+}
+
 // Plays a sinlge round of Rock Paper and Scissors
 function playGame(playerSelection, computerSelection) {
 
@@ -14,24 +26,30 @@ function playGame(playerSelection, computerSelection) {
 
   if (playerSelection === "rock") {
     if (computerSelection === "scissors") {
+      tallyScore(true);
       return "You win! Rock beats Scissors."
     } else if (computerSelection === "paper") {
+      tallyScore(false);
       return "You lose! Paper beats Rock."
     }
   }
 
   if (playerSelection === "paper") {
     if (computerSelection === "rock") {
+      tallyScore(true);
       return "You win! Paper beats Rock."
     } else if (computerSelection === "scissors") {
+      tallyScore(false);
       return "You lose! Scissors beats Paper."
     }
   }
 
   if (playerSelection === "scissors") {
     if (computerSelection === "paper") {
+      tallyScore(true);
       return "You win! Scissors beats Paper"
     } else if (computerSelection === "rock") {
+      tallyScore(false);
       return "You lose! Rock beats Scissors."
     }
   }
@@ -46,10 +64,22 @@ function game() {
     const playerSelection = prompt("Rock, Paper, Scissors?").toLowerCase();
 
     if (!(computerOptions.includes(playerSelection))) {
+      i -= 1;
       console.log("Please choose Rock Paper or Scissors");
     } else {
       console.log(playGame(playerSelection, computerSelection));
     }
   }
+
+
+  if (playerScore === computerScore) {
+    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). It's a tie!`
+  } else if (playerScore > computerScore) {
+    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). You win!`
+  } else {
+    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). You lose!`
+  }
 }
+
+console.log(game())
 
