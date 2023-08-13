@@ -6,10 +6,7 @@ function getComputerChoice() {
 }
 
 // Plays a sinlge round of Rock Paper and Scissors
-function playGame() {
-  const computerOptions = ['rock', 'paper', 'scissors'];
-  computerSelection = getComputerChoice();
-  playerSelection = prompt("Rock, Paper, Scissors?").toLowerCase();
+function playGame(playerSelection, computerSelection) {
 
   if (playerSelection === computerSelection) {
     return `You both choose ${playerSelection}. It's a tie!`
@@ -39,7 +36,20 @@ function playGame() {
     }
   }
 
-  if (!(computerOptions.includes(playerSelection))) {
-    return "Please choose Rock Paper or Scissors."
+}
+
+function game() {
+  // Play 5 rounds of Rock Paper Scissors
+  for (let i = 1; i <= 5; i++) {
+    const computerOptions = ['rock', 'paper', 'scissors'];
+    const computerSelection = getComputerChoice();
+    const playerSelection = prompt("Rock, Paper, Scissors?").toLowerCase();
+
+    if (!(computerOptions.includes(playerSelection))) {
+      console.log("Please choose Rock Paper or Scissors");
+    } else {
+      console.log(playGame(playerSelection, computerSelection));
+    }
   }
 }
+
