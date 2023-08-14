@@ -1,15 +1,7 @@
-// Randomly choose the computer's move
-function getComputerChoice() {
-  const computerOptions = ['rock', 'paper', 'scissors'];
-  const computerChoice = computerOptions[Math.floor(Math.random() * 3)];
-  return computerChoice;
-}
-
-// Tally computer and player score
 let computerScore = 0;
 let playerScore = 0;
 
-function tallyScore(playerWins) {
+function incrementScore(playerWins) {
   if (playerWins) {
     playerScore += 1;
   } else {
@@ -17,51 +9,63 @@ function tallyScore(playerWins) {
   }
 }
 
-// Plays a sinlge round of Rock Paper and Scissors
-function playGame(playerSelection, computerSelection) {
-
-  if (playerSelection === computerSelection) {
-    return `You both choose ${playerSelection}. It's a tie!`
+function compareScore() {
+  if (playerScore === computerScore) {
+    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). It's a tie!`
+  } else if (playerScore > computerScore) {
+    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). You win!`
+  } else {
+    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). You lose!`
   }
-
-  if (playerSelection === "rock") {
-    if (computerSelection === "scissors") {
-      tallyScore(true);
-      return "You win! Rock beats Scissors."
-    } else if (computerSelection === "paper") {
-      tallyScore(false);
-      return "You lose! Paper beats Rock."
-    }
-  }
-
-  if (playerSelection === "paper") {
-    if (computerSelection === "rock") {
-      tallyScore(true);
-      return "You win! Paper beats Rock."
-    } else if (computerSelection === "scissors") {
-      tallyScore(false);
-      return "You lose! Scissors beats Paper."
-    }
-  }
-
-  if (playerSelection === "scissors") {
-    if (computerSelection === "paper") {
-      tallyScore(true);
-      return "You win! Scissors beats Paper"
-    } else if (computerSelection === "rock") {
-      tallyScore(false);
-      return "You lose! Rock beats Scissors."
-    }
-  }
-
 }
 
+function getComputerChoice() {
+  const computerOptions = ['rock', 'paper', 'scissors'];
+  const computerChoice = computerOptions[Math.floor(Math.random() * 3)];
+  return computerChoice;
+}
+
+function playGame(playerSelection, computerSelection) {
+  switch (playerSelection) {
+    case "rock":
+      if (computerSelection === "scissors") {
+        incrementScore(true);
+        return "You win! Rock beats Scissors."
+      } else if (computerSelection === "paper") {
+        incrementScore(false);
+        return "You lose! Paper beats Rock."
+      } else {
+        return `It's a tie! You both chose ${playerSelection}.`
+      }
+    case "paper":
+      if (computerSelection === "rock") {
+        incrementScore(true);
+        return "You win! Paper beats Rock."
+      } else if (computerSelection === "scissors") {
+        incrementScore(false);
+        return "You lose! Scissors beats Paper."
+      } else {
+        return `It's a tie! You both chose ${playerSelection}.`
+      }
+    case "scissors":
+      if (computerSelection === "paper") {
+        incrementScore(true);
+        return "You win! Scissors beats Paper"
+      } else if (computerSelection === "rock") {
+        incrementScore(false);
+        return "You lose! Rock beats Scissors."
+      } else {
+        return `It's a tie! You both chose ${playerSelection}.`
+      }
+  }
+}
 function game() {
   // Play 5 rounds of Rock Paper Scissors
   for (let i = 1; i <= 5; i++) {
     const computerOptions = ['rock', 'paper', 'scissors'];
     const computerSelection = getComputerChoice();
     const playerSelection = prompt("Rock, Paper, Scissors?").toLowerCase();
+
 
     if (!(computerOptions.includes(playerSelection))) {
       i -= 1;
@@ -71,15 +75,10 @@ function game() {
     }
   }
 
-
-  if (playerScore === computerScore) {
-    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). It's a tie!`
-  } else if (playerScore > computerScore) {
-    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). You win!`
-  } else {
-    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). You lose!`
-  }
+  return compareScore()
 }
+
+
 
 console.log(game())
 
