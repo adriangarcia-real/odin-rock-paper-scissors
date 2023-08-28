@@ -25,7 +25,13 @@ function getComputerChoice() {
   return computerChoice;
 }
 
-function playGame(playerSelection, computerSelection) {
+function playGame() {
+  const playerSelection = prompt("Rock, Paper, Scissors?").toLowerCase();
+  const computerSelection = getComputerChoice();
+  if (!["rock", "paper", "scissors"].includes(playerSelection)) {
+    return "Please choose between rock, paper, or scissors.";
+  }
+
   switch (playerSelection) {
     case "rock":
       if (computerSelection === "scissors") {
@@ -63,16 +69,7 @@ function playGame(playerSelection, computerSelection) {
 function game() {
   // Play 5 rounds of Rock Paper Scissors
   for (let i = 1; i <= 5; i++) {
-    const computerOptions = ["rock", "paper", "scissors"];
-    const computerSelection = getComputerChoice();
-    const playerSelection = prompt("Rock, Paper, Scissors?").toLowerCase();
-
-    if (!computerOptions.includes(playerSelection)) {
-      i -= 1;
-      console.log("Please choose Rock Paper or Scissors");
-    } else {
-      console.log(playGame(playerSelection, computerSelection));
-    }
+    console.log(playGame());
   }
 
   return compareScore();
