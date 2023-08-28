@@ -1,22 +1,48 @@
 let computerScore = 0;
 let playerScore = 0;
 
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    displayRoundResult(playGame(button.id));
+  });
+});
+
 function incrementScore(playerWins) {
   if (playerWins) {
     playerScore += 1;
   } else {
     computerScore += 1;
   }
+
+  updateScore();
+  announceWinner();
 }
 
-function compareScore() {
-  if (playerScore === computerScore) {
-    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). It's a tie!`;
-  } else if (playerScore > computerScore) {
-    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). You win!`;
-  } else {
-    return `You got ${playerScore} point(s). Computer got ${computerScore} point(s). You lose!`;
+function updateScore() {
+  const playerScorePara = document.getElementById("player-score");
+  const computerScorePara = document.getElementById("computer-score");
+
+  playerScorePara.textContent = `Player Score: ${playerScore}`;
+  computerScorePara.textContent = `Computer Score: ${computerScore}`;
+}
+
+function displayRoundResult(result) {
+  const roundResult = document.getElementById("round-result");
+
+  roundResult.textContent = result;
+}
+
+function announceWinner() {
+  const results = document.getElementById("results");
+  const gameResult = document.createElement("p");
+  if (playerScore === 5) {
+    gameResult.textContent = "Game over. You win!";
+  } else if (computerScore === 5) {
+    gameResult.textContent = "Game over. You lose!";
   }
+
+  results.appendChild(gameResult);
 }
 
 function getComputerChoice() {
@@ -25,8 +51,7 @@ function getComputerChoice() {
   return computerChoice;
 }
 
-function playGame() {
-  const playerSelection = prompt("Rock, Paper, Scissors?").toLowerCase();
+function playGame(playerSelection) {
   const computerSelection = getComputerChoice();
   if (!["rock", "paper", "scissors"].includes(playerSelection)) {
     return "Please choose between rock, paper, or scissors.";
@@ -65,14 +90,3 @@ function playGame() {
       }
   }
 }
-
-function game() {
-  // Play 5 rounds of Rock Paper Scissors
-  for (let i = 1; i <= 5; i++) {
-    console.log(playGame());
-  }
-
-  return compareScore();
-}
-
-console.log(game());
