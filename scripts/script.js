@@ -1,12 +1,26 @@
 let computerScore = 0;
 let playerScore = 0;
+let gameOver = false;
 
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
-    displayRoundResult(playGame(button.id));
+    if (!gameOver) {
+      displayRoundResult(playGame(button.id));
+      checkGameOver();
+    }
   });
 });
+
+function resetGame() {
+  playerScore = 0;
+  computerScore = 0;
+  gameOver = false;
+  updateScore();
+  document.getElementById("round-result").textContent = "";
+  document.querySelector(".game-result").remove();
+  document.querySelector(".try-again").remove();
+}
 
 function incrementScore(playerWins) {
   if (playerWins) {
@@ -16,7 +30,6 @@ function incrementScore(playerWins) {
   }
 
   updateScore();
-  announceWinner();
 }
 
 function updateScore() {
@@ -33,16 +46,26 @@ function displayRoundResult(result) {
   roundResult.textContent = result;
 }
 
-function announceWinner() {
-  const results = document.getElementById("results");
-  const gameResult = document.createElement("p");
-  if (playerScore === 5) {
-    gameResult.textContent = "Game over. You win!";
-  } else if (computerScore === 5) {
-    gameResult.textContent = "Game over. You lose!";
-  }
+function checkGameOver() {
+  if (playerScore === 5 || computerScore === 5) {
+    gameOver = true;
+    const results = document.getElementById("results");
+    const gameResult = document.createElement("p");
+    gameResult.classList.add("game-result");
+    gameResult.textContent = gameOver
+      ? `Game over. You ${playerScore === 5 ? "win" : "lose"}!`
+      : "";
+    gameResult.style.color = gameOver
+      ? `${playerScore === 5 ? "green" : "red"}`
+      : "";
+    results.appendChild(gameResult);
 
-  results.appendChild(gameResult);
+    const tryAgainButton = document.createElement("button");
+    tryAgainButton.textContent = "Try Again!";
+    tryAgainButton.addEventListener("click", resetGame);
+    tryAgainButton.classList.add("try-again");
+    results.appendChild(tryAgainButton);
+  }
 }
 
 function getComputerChoice() {

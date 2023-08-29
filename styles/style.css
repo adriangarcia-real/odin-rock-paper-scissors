@@ -1,0 +1,64 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: "Playfair Display", serif;
+}
+
+body {
+  margin: 40px;
+}
+
+h1 {
+  font-size: 60px;
+  margin: 0 0 6px 0;
+}
+
+.subtext {
+  font-size: 20px;
+  margin-bottom: 30px;
+}
+
+button {
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  border: 1px solid;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 15px 35px;
+  margin: 0 5px 20px 0;
+  transition: 0.15s;
+}
+
+.try-again {
+  font-size: 18px;
+  padding: 12px 25px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+button:active {
+  opacity: 0.7;
+}
+
+.player-score,
+.computer-score {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.round-result {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.game-result {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
